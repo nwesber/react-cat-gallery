@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { fetchCatsByBreed } from '../api/CatApi'; 
 import { Cat } from '../models/catModels'; 
 
+// Describes the shape of the data and state indicators returned by the hook.
 interface FetchImagesReturn {
     images: Cat[];
     isLoading: boolean;
@@ -9,15 +10,19 @@ interface FetchImagesReturn {
     hasMoreItems: boolean; 
 }
 
+// Custom hook to fetch images based on the breed, page, and limit.
 export const useFetchImages = (selectedBreed: string | null, page: number, limit: number): FetchImagesReturn => {
+    // State to store the fetched images and status indicators.
     const [images, setImages] = useState<Cat[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [hasMoreItems, setHasMoreItems] = useState<boolean>(true); 
 
+    // Refs to hold the current values of images and selectedBreed to use in effects.
     const imagesRef = useRef<Cat[]>(images);
     const selectedBreedRef = useRef<string | null>(selectedBreed);
 
+    // Updates the refs when images or selectedBreed change.
     useEffect(() => {
         imagesRef.current = images;
     }, [images]);
@@ -26,6 +31,7 @@ export const useFetchImages = (selectedBreed: string | null, page: number, limit
         selectedBreedRef.current = selectedBreed;
     }, [selectedBreed]);
 
+    // Fetches images whenever the selected breed or limit changes.
     useEffect(() => {
         setIsLoading(true);
         setError(null);
@@ -51,6 +57,7 @@ export const useFetchImages = (selectedBreed: string | null, page: number, limit
         }
     }, [selectedBreed, limit]);
 
+    // Fetches additional images when the page is increased.
     useEffect(() => {
         const fetchImagesForPage = async () => {
             setIsLoading(true);
@@ -62,6 +69,7 @@ export const useFetchImages = (selectedBreed: string | null, page: number, limit
                         !imagesRef.current.some(image => image.id === fetchedImage.id)
                     );
 
+                    // Appends new, unique images.
                     setImages(prevImages => [...prevImages, ...newImages]);
                     setHasMoreItems(newImages.length === limit); 
                 }
@@ -77,6 +85,6 @@ export const useFetchImages = (selectedBreed: string | null, page: number, limit
         }
     }, [page, limit]);
 
-
+    // Returns the fetched images and status indicators.
     return { images, isLoading, error, hasMoreItems };
 };

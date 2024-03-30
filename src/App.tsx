@@ -7,6 +7,7 @@ import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import CatDetails from './components/SingleCatPage/CatDetails';
 
+// The main App component that sets up the routing and layout for the application.
 const App: React.FC = () => {
     return (
         <Router>

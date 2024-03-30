@@ -28,49 +28,41 @@ const CatDetails: React.FC = () => {
         }
     }, [catId]);
 
-    const goToCatGallery = {
-        pathname: '/',
-        state: { selectedBreed: breedId }
-    };
-
     return (
         <div className='my-3'>
             {catDetails ? (
                 <>  
                     {catDetails.breeds && catDetails.breeds.length > 0 && (
-                        <Breadcrumb>
-                            <Breadcrumb.Item href={`/?breed=${catDetails.breeds[0].id}`}>Cat Gallery</Breadcrumb.Item>
-                            <Breadcrumb.Item active>Cat Details</Breadcrumb.Item>
-                        </Breadcrumb>
-                    )}
-                    <Card>
-                        <Row>
-                            <Col md={8}>
-                                <Card.Body>
-                                    {catDetails.breeds && catDetails.breeds.length > 0 && (
-                                        <Card.Title>{catDetails.breeds[0].name}</Card.Title>
-                                    )}
-                                    <Card.Text>
-                                        {catDetails.breeds && catDetails.breeds.length > 0 && (
-                                            <>
+                        <>
+                            <Breadcrumb>
+                                <Breadcrumb.Item href={`/?breed=${breedId}`}>Cat Gallery</Breadcrumb.Item>
+                                <Breadcrumb.Item active>Cat Details</Breadcrumb.Item>
+                            </Breadcrumb>
+                    
+                            <Card>
+                                <Row>
+                                    <Col md={8}>
+                                        <Card.Body>
+                                            <Card.Title>{catDetails.breeds[0].name}</Card.Title>
+                                            <Card.Text>
                                                 <strong>Origin:</strong> {catDetails.breeds[0].origin}
                                                 <br />
                                                 <strong>Temperament:</strong> {catDetails.breeds[0].temperament}
                                                 <br />
                                                 <strong>Description:</strong> {catDetails.breeds[0].description}
-                                            </>
-                                        )}
-                                    </Card.Text>
-                                    <Link to={goToCatGallery}>
-                                        <Button variant="primary">Back to Cat Gallery</Button>
-                                    </Link>
-                                </Card.Body>
-                            </Col>
-                            <Col md={4}>
-                                <Card.Img variant="top" src={catDetails.url} alt="Cat" />
-                            </Col>
-                        </Row>
-                    </Card>
+                                            </Card.Text>
+                                            <Link to={`/?breed=${breedId}`}>
+                                                <Button variant="primary">Back to Cat Gallery</Button>
+                                            </Link>
+                                        </Card.Body>
+                                    </Col>
+                                    <Col md={4}>
+                                        <Card.Img variant="top" src={catDetails.url} alt="Cat" />
+                                    </Col>
+                                </Row>
+                            </Card>
+                        </>
+                     )}
                 </>                            
             ) : (
                 <Spinner animation="border" role="status">

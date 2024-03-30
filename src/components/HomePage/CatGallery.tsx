@@ -6,20 +6,32 @@ import { usePagination } from '../../context/PaginationContext';
 import { Link } from 'react-router-dom';
 import { useFetchImages } from '../../hooks/useCatData';
 
+/**
+ * CatGallery displays a grid of cat images based on the selected breed.
+ */
 const CatGallery: React.FC = () => {
+    // Access selected breed and pagination context.
     const { selectedBreed } = useCatContext();
     const { page, setPage } = usePagination();
+
+    // Fetch images using the custom hook based on selected breed and current page.
     const { images, isLoading, error, hasMoreItems } = useFetchImages(selectedBreed, page, 10);
 
+    // Function to load more images (next page).
     const handleMore = () => {
         setPage(prevPage => prevPage + 1);
     };
 
     return (
         <>
-
-            {error && <div className="text-center mt-4 bg-red py-3 text-white">{"Apologies but we could not load new cats for you at this time! Miau!"}</div>}
+            {/* Show error message if there was an error fetching the images. */}
+            {error && 
+                <div className="text-center mt-4 bg-red py-3 text-white">
+                    {"Apologies but we could not load new cats for you at this time! Miau!"}
+                </div>
+            }
             
+            {/* Display images in a responsive grid. */}
             <Row xs={1} md={2} lg={4} className="g-4">
                 {images.length === 0 ? (
                     <div className="d-flex justify-content-center align-items-center w-100">
@@ -40,7 +52,8 @@ const CatGallery: React.FC = () => {
                     ))
                 )}
             </Row>
-
+            
+            {/* Button to load more images if not loading and more items are available. */}
             {!isLoading && hasMoreItems && (
                 <div className="text-center mt-4">
                     <button className="btn btn-primary" onClick={handleMore}>Load More</button>

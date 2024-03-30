@@ -1,3 +1,4 @@
+// Defines the shape of a cat object.
 export interface Cat {
     id: string;
     breeds?: [
@@ -13,7 +14,8 @@ export interface Cat {
     width?: number;
     height?: number;
 }
-  
+
+// Similar to Cat but for API responses where all fields are expected.
 export interface CatApiResponse {
     id: string;
     breeds: [

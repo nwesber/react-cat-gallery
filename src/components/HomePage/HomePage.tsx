@@ -3,6 +3,9 @@ import CatBreedSelector from './CatBreedSelector';
 import CatGallery from './CatGallery';
 import { PaginationProvider } from '../../context/PaginationContext';
 
+/**
+ * This is the HomePage component. It's what users see first.
+ */
 const HomePage: React.FC = () => {
     return (
         <div className='my-3'>
